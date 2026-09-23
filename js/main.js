@@ -71,6 +71,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // ==========================================
+  // GOOGLE ANALYTICS 4 (GA4) DÖNÜŞÜM & ETKİNLİK TAKİBİ
+  // ==========================================
+  function sendAnalyticsEvent(eventName, params) {
+    if (typeof window.loadGtag === 'function' && !window.__gtagLoaded) {
+      window.loadGtag();
+    }
+
+    const payload = Object.assign({
+      transport_type: 'beacon'
+    }, params);
+
+    // 1. GA4 gtag çağrısı
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, payload);
+    } else if (typeof gtag === 'function') {
+      gtag('event', eventName, payload);
+    }
+
+    // 2. dataLayer (GTM & GA4 kuyruğu)
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(Object.assign({ event: eventName }, payload));
+  }
+
   // WhatsApp Mesajı Gönderme Yardımcısı (iOS Safari ve Mobil Pop-up Engelleyici Çözümü)
   function sendWhatsAppMessage(text) {
     const encodedText = encodeURIComponent(text);
@@ -83,9 +107,10 @@ document.addEventListener('DOMContentLoaded', () => {
       || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
     if (isMobile) {
-      // Mobilde ve asenkron callback'lerde (geolocation) window.open kullanılırsa iOS Safari pop-up engeller.
-      // window.location.href ise pop-up engeline takılmadan doğrudan yerel WhatsApp uygulamasını mesaj dolu olarak açar.
-      window.location.href = url;
+      // Mobilde GA4 beacon çağrısının arka planda güvenle tamamlanması için 120ms gecikme ile açılır
+      setTimeout(() => {
+        window.location.href = url;
+      }, 120);
     } else {
       // Masaüstünde yeni sekmede aç, pop-up engellenirse mevcut sekmede yönlendir
       const win = window.open(url, '_blank');
@@ -124,6 +149,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Kullanıcının tek dokunuşla göndereceği hazır metin (sonrasında WhatsApp'tan konum göndermesi için yönlendirir)
       const message = `Merhaba Tuzla Yol Yardım, acil yol yardım / çekiciye ihtiyacım var.\n📍 Bulunduğum Bölge: ${area}\n\n(Harita konumumu bu mesajın hemen ardından WhatsApp üzerinden paylaşıyorum.)`;
+
+      const btnText = (btn.innerText || btn.getAttribute('title') || 'WhatsApp Konum Gönder').trim().replace(/\s+/g, ' ');
+      const btnId = btn.id || btn.className || 'btn-send-location';
+
+      // GA4 Olayları: click_whatsapp, konum_at_tiklama ve generate_lead
+      sendAnalyticsEvent('click_whatsapp', {
+        event_category: 'İletişim',
+        event_label: `WhatsApp Konum - ${area} (${btnId})`,
+        location_area: area,
+        button_id: btn.id || '',
+        page_location: window.location.href
+      });
+
+      sendAnalyticsEvent('konum_at_tiklama', {
+        event_category: 'İletişim',
+        event_label: `Konum At (${area}) - ${btnText}`,
+        location_area: area,
+        button_id: btn.id || ''
+      });
+
+      sendAnalyticsEvent('generate_lead', {
+        event_category: 'İletişim',
+        event_label: 'WhatsApp Konum Paylaşımı',
+        method: 'whatsapp_location',
+        value: 1,
+        currency: 'TRY'
+      });
 
       sendWhatsAppMessage(message);
     });
@@ -257,6 +309,25 @@ document.addEventListener('DOMContentLoaded', () => {
         text += `📝 *Ek Açıklama:* ${noteVal}\n`;
       }
       text += `\nLütfen en kısa sürede sabit fiyat ve varış süresi bildiriniz.`;
+
+      // GA4 Teklif Formu Gönderme Olayları
+      sendAnalyticsEvent('whatsapp_form_gonder', {
+        event_category: 'Teklif Formu',
+        event_label: `${locationVal} -> ${toVal} (${vehicleVal})`,
+        from_location: locationVal,
+        to_location: toVal,
+        vehicle_type: vehicleVal,
+        problem: problemVal,
+        page_location: window.location.href
+      });
+
+      sendAnalyticsEvent('generate_lead', {
+        event_category: 'Teklif Formu',
+        event_label: 'WhatsApp Teklif Formu',
+        method: 'whatsapp_form',
+        value: 1,
+        currency: 'TRY'
+      });
 
       sendWhatsAppMessage(text);
     });
@@ -421,4 +492,72 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // 11. Google Analytics 4 (GA4) Etkinlik Takibi: Tüm "Ara" (tel:) Butonları
+  document.addEventListener('click', (e) => {
+    const telLink = e.target.closest('a[href^="tel:"]');
+    if (!telLink) return;
+
+    const rawHref = telLink.getAttribute('href') || '';
+    const phoneNumber = rawHref.replace('tel:', '').trim();
+    const btnText = (telLink.innerText || telLink.getAttribute('title') || 'Hemen Ara').trim().replace(/\s+/g, ' ');
+    const btnId = telLink.id || telLink.className || 'tel-link';
+
+    // 1. GA4 Özel Olay: click_to_call (Google Ads ve GA4 standartlarına uygun)
+    sendAnalyticsEvent('click_to_call', {
+      event_category: 'İletişim',
+      event_label: `${btnText} (${btnId})`,
+      phone_number: phoneNumber,
+      button_id: telLink.id || '',
+      page_title: document.title,
+      page_location: window.location.href
+    });
+
+    // 2. GA4 Özel Türkçe Olay: ara_butonu_tiklama (Analytics panelinde doğrudan Türkçe isimle arayanlar için)
+    sendAnalyticsEvent('ara_butonu_tiklama', {
+      event_category: 'İletişim',
+      event_label: btnText,
+      phone_number: phoneNumber,
+      button_id: telLink.id || ''
+    });
+
+    // 3. Standart GA4 Dönüşüm Olayı: generate_lead
+    sendAnalyticsEvent('generate_lead', {
+      event_category: 'İletişim',
+      event_label: 'Telefon Arama',
+      method: 'phone',
+      value: 1,
+      currency: 'TRY'
+    });
+  });
+
+  // 12. Google Analytics 4 (GA4) Etkinlik Takibi: Doğrudan WhatsApp Bağlantıları (Yedek Takip)
+  document.addEventListener('click', (e) => {
+    const wpLink = e.target.closest('a[href*="whatsapp.com"], a[href*="wa.me"]');
+    if (!wpLink || wpLink.classList.contains('btn-send-location')) return;
+
+    const btnText = (wpLink.innerText || wpLink.getAttribute('title') || 'WhatsApp').trim().replace(/\s+/g, ' ');
+    const btnId = wpLink.id || wpLink.className || 'wp-link';
+
+    sendAnalyticsEvent('click_whatsapp', {
+      event_category: 'İletişim',
+      event_label: `${btnText} (${btnId})`,
+      button_id: wpLink.id || '',
+      page_location: window.location.href
+    });
+
+    sendAnalyticsEvent('konum_at_tiklama', {
+      event_category: 'İletişim',
+      event_label: btnText,
+      button_id: wpLink.id || ''
+    });
+
+    sendAnalyticsEvent('generate_lead', {
+      event_category: 'İletişim',
+      event_label: 'WhatsApp Tıklama',
+      method: 'whatsapp',
+      value: 1,
+      currency: 'TRY'
+    });
+  });
 });
