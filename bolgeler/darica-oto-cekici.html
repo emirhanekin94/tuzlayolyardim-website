@@ -26,7 +26,10 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#ff5500">
-  <link rel="stylesheet" href="../css/style.css">
+    <!-- Kapak Fotoğrafı: Mobil ve masaüstü için optimize preload (PageSpeed 100) -->
+  <link rel="preload" as="image" href="/images/kapak-fotografi-mobile.webp" type="image/webp" media="(max-width: 768px)" fetchpriority="high">
+  <link rel="preload" as="image" href="/images/kapak-fotografi.webp" type="image/webp" media="(min-width: 769px)" fetchpriority="high">
+<link rel="stylesheet" href="../css/style.css">
 
   <script type="application/ld+json">
   {
@@ -181,114 +184,146 @@
       </div>
     </div>
   </header>
+  <!-- Hero (Giriş) Bölümü - Ultra Luxury Homepage Stili (PageSpeed 100 Uyumlu) -->
+  <section class="hero-section">
+    <!-- Anında & Beklemesiz Yüklenen Eager Hero Arka Planı -->
+    <picture class="hero-bg-picture">
+      <source media="(max-width: 768px)" srcset="/images/kapak-fotografi-mobile.webp" type="image/webp">
+      <img src="/images/kapak-fotografi.webp" alt="Darıca Oto Çekici ve Yol Yardım" class="hero-bg-img"
+        fetchpriority="high" loading="eager" decoding="async" width="1280" height="720">
+    </picture>
+    <div class="hero-bg-overlay"></div>
 
-  <!-- Hero / Breadcrumb -->
-  <section style="background: linear-gradient(135deg, var(--secondary), var(--bg-dark)); color: #fff; padding: 45px 0;">
-    <div class="container">
-      <div style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 10px;">
-        <a href="../index.html" style="color: #cbd5e1;">Ana Sayfa</a> / <a href="../bolgeler/index.html" style="color: #cbd5e1;">Hizmet Bölgeleri</a> / <span>Darıca</span>
+    <div class="container hero-content">
+      <div class="hero-text">
+        <!-- Breadcrumb -->
+        <nav aria-label="Breadcrumb" style="margin-bottom: 12px; font-size: 0.85rem; color: #94a3b8;">
+          <a href="../index.html" style="color: #cbd5e1; text-decoration: none;">Ana Sayfa</a> / 
+          <a href="../bolgeler/index.html" style="color: #cbd5e1; text-decoration: none;">Hizmet Bölgeleri</a> / 
+          <span style="color: var(--primary);">Darıca</span>
+        </nav>
+
+        <div class="urgent-badge">
+          <span class="pulse-dot"></span>
+          <span>Darıca ve çevresinde ortalama varış süremiz 15 dakika!</span>
+        </div>
+        <h1 class="hero-title">
+          Darıca Çekici & 7/24 <span class="highlight">Darıca Oto Kurtarma</span> | En Yakın <span class="highlight">Oto Çekici</span>
+        </h1>
+        <p class="hero-subtitle">
+          Darıca oto çekici ve acil oto kurtarma filomuzla; donanımlı kayar kasa araçlarımızla 7 gün 24 saat ortalama 10-15 dakikada hasarsız araç taşıma ve yol yardım hizmeti veriyoruz.
+        </p>
+
+        <!-- 2 Ana Çağrı Butonu (1 Arama + 1 WhatsApp) -->
+        <div class="hero-buttons">
+          <a href="tel:05516756624" class="btn btn-call btn-lg" id="hero-call-btn">
+            <span class="svg-icon" style="width: 22px; height: 22px;"><svg viewBox="0 0 24 24" width="20" height="20"
+                fill="currentColor">
+                <path
+                  d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z" />
+              </svg></span>
+            <span>0551 675 66 24 (Hemen Ara)</span>
+          </a>
+          <a href="#" class="btn btn-whatsapp btn-lg btn-send-location" id="hero-whatsapp-btn">
+            <span class="svg-icon" style="width: 22px; height: 22px;"><svg viewBox="0 0 24 24" width="20" height="20"
+                fill="currentColor">
+                <path
+                  d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.23 8.23 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.01-1.24-.74-.66-1.25-1.48-1.39-1.73-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.28z" />
+              </svg></span>
+            <span>WhatsApp Konum Gönder</span>
+          </a>
+        </div>
+
+        <!-- 4 Cam Kart (Stats) -->
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number">15 <span>Dk</span></span>
+            <span class="stat-label">Ortalama Ulaşım</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">7/24 <span>Saat</span></span>
+            <span class="stat-label">Nöbetçi Çekici</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">%100 <span>Güven</span></span>
+            <span class="stat-label">Kaskolu Taşıma</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">5.0 <span>★</span></span>
+            <span class="stat-label">Google Müşteri Puanı</span>
+          </div>
+        </div>
       </div>
-      <h1 style="font-size: 2.25rem; font-weight: 900; margin-bottom: 8px;">Darıca Oto Çekici ve Oto Kurtarma</h1>
-      <p style="color: #cbd5e1; font-size: 1.05rem;">
-        Darıca ve çevresinde ortalama <strong>15 Dakika</strong> varış süresiyle en yakın profesyonel oto kurtarma filosu.
-      </p>
+
+      <!-- Doğrudan WhatsApp Teklif Formu -->
+      <div class="hero-form-card" id="hero-form-card">
+        <div class="form-card-header" id="hero-form-toggle">
+          <div class="form-card-header-text">
+            <h2 class="form-card-title">Hızlı Fiyat Teklifi Al</h2>
+            <p class="form-card-subtitle">Darıca ekibimizden anında WhatsApp fiyatı gelsin:</p>
+          </div>
+          <button type="button" class="form-card-toggle-btn" aria-label="Teklif Formunu Aç/Kapat">
+            <span class="toggle-btn-text">Formu Aç</span>
+            <svg class="toggle-chevron" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </button>
+        </div>
+
+        <form class="wp-contact-form" id="hero-quote-form">
+          <div class="wp-form-group">
+            <label class="wp-form-label" for="hero-region-select">Bulunduğunuz Bölge / Güzergah *</label>
+            <select name="region_select" id="hero-region-select" aria-label="Bulunduğunuz Bölge / Güzergah"
+              class="wp-form-select" required>
+                <option value="Tuzla">📍 Tuzla (İçmeler, Aydınlı, Marina, E-5)</option>
+                <option value="Pendik">📍 Pendik (Merkez, Sahil, Kaynarca, Çamlık)</option>
+                <option value="Kurtköy">📍 Kurtköy & Sabiha Gökçen Havalimanı</option>
+                <option value="Gebze">📍 Gebze (Merkez, GOSB, Otogar, Sanayi)</option>
+                <option value="Çayırova">📍 Çayırova (Şekerpınar, TOSB)</option>
+                <option value="Darıca" selected>📍 Darıca & Bayramoğlu</option>
+                <option value="TEM Otoyolu">🛣️ TEM Otoyolu (Kurtköy - Gebze Gişeler)</option>
+                <option value="D-100 / E-5">🛣️ D-100 / E-5 Karayolu (Kartal - Tuzla - Gebze)</option>
+                <option value="Kuzey Marmara Otoyolu">🛣️ Kuzey Marmara Otoyolu (Kurnaköy - Sevindikli)</option>
+            </select>
+          </div>
+
+          <div class="wp-form-group">
+            <label class="wp-form-label" for="hero-vehicle-select">Araç Tipi *</label>
+            <select name="vehicle_type_select" id="hero-vehicle-select" aria-label="Araç Tipi" class="wp-form-select" required>
+              <option value="Otomobil" selected>🚗 Otomobil (Binek / SUV / Sedan)</option>
+              <option value="Motosiklet">🏍️ Motosiklet</option>
+              <option value="Hafif Ticari">🚐 Minibüs / Hafif Ticari / Panelvan</option>
+              <option value="Ağır Vasıta / Minibüs">🚛 Ağır Vasıta / Kamyonet</option>
+            </select>
+          </div>
+
+          <div class="wp-form-group">
+            <label class="wp-form-label" for="hero-note-input">Gidilecek Yer / Durum Notu</label>
+            <input type="text" name="user_note" id="hero-note-input" placeholder="Örn: Darıca'den Sanayi Sitesine" class="wp-form-input">
+          </div>
+
+          <button type="submit" class="btn btn-whatsapp wp-submit-btn">
+            <span class="svg-icon" style="width: 20px; height: 20px;"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.23 8.23 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.01-1.24-.74-.66-1.25-1.48-1.39-1.73-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg></span>
+            <span>WhatsApp ile Fiyat Al</span>
+          </button>
+        </form>
+      </div>
     </div>
   </section>
 
-  <!-- Ana İçerik -->
-  <main class="section">
+  <!-- Ana İçerik Başlangıcı (Landmark) -->
+  <main class="section" id="main-content">
     <div class="container" style="max-width: 1060px;">
 
       <!-- Bölge Güvence Rozetleri -->
-      <div class="region-badge-bar">
-        <div class="region-badge-pill"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg> Ortalama Varış: <strong>15 Dakika</strong></div>
+      <div class="region-badge-bar" style="margin-bottom: 30px;">
+        <div class="region-badge-pill"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg> Ortalama Varış: <strong>10 - 15 Dakika</strong></div>
         <div class="region-badge-pill"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg> %100 Taşıma Kaskosu</div>
         <div class="region-badge-pill"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg> Sabit Fiyat Garantisi</div>
         <div class="region-badge-pill"><svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M19 17h2c.55 0 1-.45 1-1v-3.5c0-.38-.21-.71-.53-.88l-2.02-1.01A1.99 1.99 0 0018.55 10H16V7a1 1 0 00-1-1H3a1 1 0 00-1 1v10h2a3 3 0 006 0h4a3 3 0 006 0zm-12 1a1 1 0 110-2 1 1 0 010 2zm10 0a1 1 0 110-2 1 1 0 010 2zM16 11.5h2.55l1.6 1.07V15H16v-3.5zM4 8h10v7H4V8z"/></svg> Aparatlı Sıfır Hasar Taşıma</div>
         <div class="region-badge-pill"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg> 7/24 Kesintisiz Nöbetçi Filo</div>
       </div>
-      
-      <!-- Hızlı Çağrı & Doğrudan WhatsApp Teklif Formu Kutusu -->
-      <div style="background: #fff; border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 30px; box-shadow: var(--shadow-md); margin-bottom: 35px;">
-        <div class="region-cta-grid">
-          <div>
-            <span style="background: var(--primary-light); color: var(--primary); font-size: 0.8rem; font-weight: 800; padding: 4px 10px; border-radius: var(--radius-full); text-transform: uppercase;">
-              Darıca Acil İhbar Hattı
-            </span>
-            <h2 style="font-size: 1.5rem; color: var(--secondary); margin-top: 8px;">Darıca Bölgesinde Yolda mı Kaldınız?</h2>
-            <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 6px; line-height: 1.6;">
-              Aracınız ister yürür vaziyette ister mekanik kilitli olsun; son model hidrolik kayar kasalı araçlarımızla ortalama <strong>15 Dakika</strong> içinde yanınızdayız.
-            </p>
-            <div style="display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap;">
-              <a href="tel:05516756624" class="btn btn-call btn-lg"><span class="svg-icon" style="width:18px;height:18px;"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z"/></svg></span> 0551 675 66 24</a>
-              <a href="#" class="btn btn-whatsapp btn-lg btn-send-location"><span class="svg-icon" style="width:18px;height:18px;"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.23 8.23 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.01-1.24-.74-.66-1.25-1.48-1.39-1.73-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg></span> Canlı Konum At</a>
-            </div>
-          </div>
-
-          <!-- Doğrudan WhatsApp'a Düşen Form -->
-          <div style="background: #ffffff; border: 1px solid var(--border-light); padding: 24px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm);">
-            <strong style="display: block; font-size: 1.05rem; font-weight: 800; color: var(--text-dark); margin-bottom: 4px;">WhatsApp'tan Anında Fiyat Al</strong>
-            <small style="color: var(--text-muted); display: block; margin-bottom: 14px;">Formu doldurun, Darıca Çekici nöbetçi ekibimizden anında fiyat gelsin:</small>
-            
-            <form class="wp-contact-form">
-              <div style="margin-bottom: 10px;">
-                <label style="display:block; font-size: 0.78rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">Bulunduğunuz Bölge *</label>
-                <select name="region_select" aria-label="Bulunduğunuz Bölge" class="wp-form-select wp-form-select-light" required>
-                  <option value="Tuzla" >Tuzla Çekici</option><option value="Sabiha Gökçen" >Sabiha Gökçen Çekici</option><option value="Kuzey Marmara" >Kuzey Marmara Çekici</option><option value="TEM Otoyolu" >TEM Otoyolu Çekici</option><option value="D-100 E-5" >D-100 E-5 Çekici</option><option value="Akfırat" >Akfırat Çekici</option><option value="Tepeören" >Tepeören Çekici</option><option value="Orhanlı" >Orhanlı Çekici</option><option value="Aydınlı" >Aydınlı Çekici</option><option value="İçmeler" >İçmeler Çekici</option><option value="Aydıntepe" >Aydıntepe Çekici</option><option value="Şifa Mahallesi" >Şifa Mahallesi Çekici</option><option value="Esenyalı" >Esenyalı Çekici</option><option value="Güzelyalı" >Güzelyalı Çekici</option><option value="Kurtköy" >Kurtköy Çekici</option><option value="Sevindikli" >Sevindikli Çekici</option><option value="Tuzla Marina" >Tuzla Marina Çekici</option><option value="İstanbul Park" >İstanbul Park Çekici</option><option value="Gebze" >Gebze Çekici</option><option value="Çayırova" >Çayırova Çekici</option><option value="Eskihisar" >Eskihisar Çekici</option><option value="Bayramoğlu" >Bayramoğlu Çekici</option><option value="Darıca" selected>Darıca Çekici</option><option value="Pendik" >Pendik Çekici</option>
-                </select>
-              </div>
-
-              <div style="margin-bottom: 10px;">
-                <label style="display:block; font-size: 0.78rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">Araç Türü *</label>
-                <select name="vehicle_type_select" aria-label="Araç Türü" class="wp-form-select wp-form-select-light" required>
-                  <option value="Otomobil" selected>Otomobil (Binek / SUV / Sedan)</option>
-                  <option value="Motosiklet">Motosiklet</option>
-                  <option value="Kamyonet">Kamyonet / Hafif Ticari</option>
-                  <option value="Minibüs">Minibüs / Panelvan</option>
-                  <option value="Karavan">Karavan / Römork</option>
-                  <option value="ATV">ATV / UTV</option>
-                  <option value="Tekne">Tekne / Bot</option>
-                </select>
-              </div>
-
-              <div style="margin-bottom: 10px;">
-                <label style="display:block; font-size: 0.78rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">Arıza / Problem Durumu *</label>
-                <select name="problem_select" aria-label="Yaşanan Problem" class="wp-form-select wp-form-select-light" required>
-                  <option value="Trafik Kazası (Yürümüyor)">Trafik Kazası (Yürümüyor / Hasarlı)</option>
-                  <option value="Motor / Mekanik Arızası">Motor / Mekanik Arızası (Stop Etti)</option>
-                  <option value="Akü Bitti / Marş Basmıyor">Akü Bitti / Marş Basmıyor</option>
-                  <option value="Lastik Patladı / Stepne Yok">Lastik Patladı / Stepne Yok</option>
-                  <option value="Şanzıman / Vites Kilitlendi">Şanzıman / Vites Kilitlendi</option>
-                  <option value="Çamura / Şarampole Saplandı">Çamura / Şarampole Saplandı (Vinç Lazım)</option>
-                  <option value="Özel Araç Nakliyesi">Özel Araç Nakliyesi (Servise / Şehirlerarası)</option>
-                </select>
-              </div>
-
-              <div style="margin-bottom: 10px;">
-                <label style="display:block; font-size: 0.78rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">Hedef / Sanayi</label>
-                <input type="text" name="to_location" placeholder="Örn: En Yakın Sanayi / Yetkili Servis" class="wp-form-input" style="background:#fff; color:var(--text-dark); border-color:var(--border-light);">
-              </div>
-
-              <div style="margin-bottom: 10px;">
-                <label style="display:block; font-size: 0.78rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">Kısa Not</label>
-                <input type="text" name="user_note" placeholder="Örn: Tekerlek kilitli, otoparkta" class="wp-form-input" style="background:#fff; color:var(--text-dark); border-color:var(--border-light);">
-              </div>
-
-              <div style="margin-bottom: 12px;">
-                <label style="display:block; font-size: 0.78rem; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">İletişim Numaranız (İsteğe Bağlı)</label>
-                <input type="tel" name="user_phone" placeholder="05XX XXX XX XX" class="wp-form-input" style="background:#fff; color:var(--text-dark); border-color:var(--border-light);">
-              </div>
-
-              <button type="submit" class="btn btn-whatsapp" style="width: 100%; padding: 12px; font-size: 0.95rem;">
-                <span class="svg-icon" style="width:18px;height:18px;"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.23 8.23 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.01-1.24-.74-.66-1.25-1.48-1.39-1.73-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg></span> WhatsApp'a Gönder & Fiyat Al
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <!-- Detaylı Özgün Açıklama & Bölgesel Analiz -->
-      <article class="region-feature-box">
+<article class="region-feature-box">
         <h2 style="font-size: 1.45rem; color: var(--secondary); margin-bottom: 14px;">Darıca Oto Çekici ve Kurtarma Hizmet Detayları</h2>
         <p style="margin-bottom: 16px; font-size: 0.98rem; line-height: 1.8;">
           Kocaeli'nin Marmara kıyısındaki yoğun nüfuslu ilçesi Darıca; Darıca Sahil Parkı, Faruk Yalçın Hayvanat Bahçesi, Marmaray İstasyon mahallesi ve dik yamaçlara kurulu sokakları ile 24 saat hareketlidir.
