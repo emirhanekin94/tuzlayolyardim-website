@@ -8,6 +8,7 @@
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-JHT62VL18P');
+    gtag('config', 'AW-17658182538');
 
     function loadGtag() {
       if (window.__gtagLoaded) return;
@@ -17,7 +18,9 @@
       s.async = true;
       document.head.appendChild(s);
     }
-    if ('requestIdleCallback' in window) {
+    if (/[?&](gclid|wbraid|gbraid|gad_source)=/i.test(window.location.search)) {
+      loadGtag();
+    } else if ('requestIdleCallback' in window) {
       requestIdleCallback(loadGtag);
     } else {
       window.addEventListener('load', () => setTimeout(loadGtag, 1000));

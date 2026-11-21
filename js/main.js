@@ -95,6 +95,47 @@ document.addEventListener('DOMContentLoaded', () => {
     window.dataLayer.push(Object.assign({ event: eventName }, payload));
   }
 
+  // ==========================================
+  // GOOGLE ADS ARAMA DÖNÜŞÜM TAKİBİ (SADECE TELEFON ARAMALARI)
+  // Hesap: 209-844-6709 | Etiket: AW-17658182538/OVAzCK_d3rwdEIr3ieRB
+  // ==========================================
+  const ADS_CALL_CONVERSION_SEND_TO = 'AW-17658182538/OVAzCK_d3rwdEIr3ieRB';
+
+  window.gtag_report_conversion = function (url) {
+    if (typeof window.loadGtag === 'function' && !window.__gtagLoaded) {
+      window.loadGtag();
+    }
+
+    let redirected = false;
+    const callback = function () {
+      if (redirected) return;
+      redirected = true;
+      if (typeof url === 'string' && url.length > 0) {
+        window.location.href = url;
+      }
+    };
+
+    const conversionPayload = {
+      send_to: ADS_CALL_CONVERSION_SEND_TO,
+      value: 1.0,
+      currency: 'TRY',
+      transport_type: 'beacon',
+      event_callback: callback
+    };
+
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'conversion', conversionPayload);
+    } else if (typeof gtag === 'function') {
+      gtag('event', 'conversion', conversionPayload);
+    }
+
+    // Reklam engelleyici veya yavaş bağlantıda telefon aramasının asla gecikmemesi için güvenli yedek
+    if (typeof url === 'string' && url.length > 0) {
+      setTimeout(callback, 250);
+    }
+    return false;
+  };
+
   // WhatsApp Mesajı Gönderme Yardımcısı (iOS Safari ve Mobil Pop-up Engelleyici Çözümü)
   function sendWhatsAppMessage(text) {
     const encodedText = encodeURIComponent(text);
@@ -493,8 +534,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 11. Google Analytics 4 (GA4) Etkinlik Takibi: Tüm "Ara" (tel:) Butonları
+  // 11. Google Analytics 4 (GA4) + Google Ads Dönüşüm Takibi: Tüm "Ara" (tel:) Butonları
   document.addEventListener('click', (e) => {
+    if (e.defaultPrevented) return;
     const telLink = e.target.closest('a[href^="tel:"]');
     if (!telLink) return;
 
@@ -529,6 +571,12 @@ document.addEventListener('DOMContentLoaded', () => {
       value: 1,
       currency: 'TRY'
     });
+
+    // 4. Google Ads Arama Dönüşümü (Yalnızca telefon aramaları — WhatsApp dahil değil)
+    if (rawHref && typeof window.gtag_report_conversion === 'function') {
+      e.preventDefault();
+      window.gtag_report_conversion(rawHref);
+    }
   });
 
   // 12. Google Analytics 4 (GA4) Etkinlik Takibi: Doğrudan WhatsApp Bağlantıları (Yedek Takip)
